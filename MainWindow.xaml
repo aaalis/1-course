@@ -1,0 +1,94 @@
+﻿<Window x:Class="Lab10.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Height="570" Width="1150" Loaded="Window_Loaded" ResizeMode="CanMinimize" Closing="Window_Closing">
+    <Window.Background>
+        <SolidColorBrush Color="#FFFFFFE1"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height ="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Height="220" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="18,0" Width="998">
+            <TextBox HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="25" FontSize="16" TextWrapping="Wrap" Text="Основные сведения о заказе" VerticalAlignment="Top" Width="306" Margin="0,0,0,10"/>
+            <DataGrid HorizontalAlignment="Left" x:Name="MainData" Height="195" VerticalAlignment="Top" Width="1008" FontSize="14" AutoGenerateColumns="False" SelectionMode="Single" SelectionChanged="MainData_SelectionChanged" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" Margin="0,0,0,10">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Дата" x:Name="Date" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding Path=dDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Path=dTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" x:Name="dTime" Header= "Время" Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Path=Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Header="Номер" x:Name="Count" Width="75"/>
+                    <DataGridTextColumn Binding="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Header="Адрес" x:Name="Address" Width="255"/>
+                    <DataGridTemplateColumn Header="Курьер" x:Name="Courier" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox x:Name="Couriers" SelectedItem="{Binding SelectCourier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="RoyalBlue" Loaded="Couriers_Loaded">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Time, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Header="Время доставки" x:Name="Time" Width="120"/>
+                    <DataGridTextColumn Binding="{Binding Path=Sale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Header="Скидка,%" x:Name="Sale" Width="80"/>
+                    <DataGridTextColumn Binding="{Binding Path=TotalPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Header="Стоимость,руб" x:Name="TotalPrice" Width="100">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="OrangeRed"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="Background" Value="OrangeRed"/>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="Delete" Width="25" Height="25" Click="Delete_Click" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                    <Image Source="delbut.png" Width="25" Height="25"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Height="220" Margin="267,0" Width="500">
+            <TextBox HorizontalAlignment="Center" HorizontalContentAlignment="Center" Height="25" FontSize="16" TextWrapping="Wrap" Text="Компоненты заказа" VerticalAlignment="Top" Width="306" Margin="0,0,0,10"/>
+            <DataGrid HorizontalAlignment="Center" x:Name="ComponentsData" Height="195" VerticalAlignment="Top" Width="500" FontSize="14" AutoGenerateColumns="False" Margin="0,0,0,13" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Width="50"
+                                        x:Name="isSelect" 
+                                        Header="" 
+                                        Binding="{Binding Path=IsSelect, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <DataGridTextColumn Header="Название" 
+                                    Binding="{Binding Path=Dish.Name}" 
+                                    x:Name="Dish"
+                                    IsReadOnly="True"
+                                    Width="250"/>
+                    <DataGridTextColumn Header="Цена,руб" 
+                                    Binding="{Binding Path=Dish.Price}" 
+                                    x:Name="Price"
+                                    IsReadOnly="True"
+                                    Width="100"/>
+                    <DataGridTextColumn Header="Количество" 
+                                    Binding="{Binding Path=CountComp,UpdateSourceTrigger=LostFocus, Mode=TwoWay}" 
+                                    x:Name="CountComp" 
+                                    Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
