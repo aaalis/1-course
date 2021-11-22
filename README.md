@@ -2,4 +2,4 @@
 - WPF
 - Json
 
-![Screen](<img src="https://i.ibb.co/pxqFhh8/Screen.jpg" alt="Screen" border="0">)
+![](https://i.ibb.co/pxqFhh8/Screen.jpg)
